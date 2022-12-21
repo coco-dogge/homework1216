@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     }
 
      class MyAdapter(
-        var data: ArrayList<Data>,
-        var view:Int = 0) : BaseAdapter() {
+         private var data: Array<Data>,
+         private var view:Int = 0) : BaseAdapter() {
 
         init {
             this.data = data
@@ -43,9 +43,10 @@ class MainActivity : AppCompatActivity() {
 
             val converView = LayoutInflater.from(parent?.context).inflate(view,parent,false)
             val name : TextView = converView.findViewById(R.id.name)
-            name.setText(data[position].name)
+            name.text = data[position].name
             val imageView: ImageView = converView.findViewById(R.id.imageView)
             imageView.setImageResource(data[position].photo)
+
             return converView
         }
     }
@@ -57,7 +58,8 @@ class MainActivity : AppCompatActivity() {
         val transNameArray = arrayListOf("腳踏車","機車","汽車","巴士")
         val transPhotoIdArray = arrayListOf(R.drawable.trans1,R.drawable.trans2,R.drawable.trans3,R.drawable.trans4)
 
-        val transData : ArrayList<Data> = ArrayList(transNameArray.size)
+        val transData = Array(transNameArray.size){Data()}//////////////
+
 
         for (i in 0 until transData.size) {
             transData[i] = Data()
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
          val transAdapter = MyAdapter(transData, R.layout.trans_list)
 
         val spinner = findViewById<Spinner>(R.id.spinner)
-        spinner.setAdapter(transAdapter)
+        spinner.adapter = transAdapter
 
         val messageArray = arrayListOf("訊息1", "訊息2", "訊息3", "訊息4", "訊息5", "訊息6")
         val messageAdapter = ArrayAdapter(
@@ -79,14 +81,13 @@ class MainActivity : AppCompatActivity() {
 
         val cubeeNameArray = arrayOf(
             "哭哭", "發抖", "再見", "生氣", "昏倒", "竊笑",
-            "很棒", "你好", "驚嚇", "大笑"
-        )
+            "很棒", "你好", "驚嚇", "大笑")
         val cubeePhotoIdArray = intArrayOf(
             R.drawable.cubee1, R.drawable.cubee2,
             R.drawable.cubee3, R.drawable.cubee4, R.drawable.cubee5, R.drawable.cubee6,
             R.drawable.cubee7, R.drawable.cubee8, R.drawable.cubee9, R.drawable.cubee10
         )
-        val cubeeData : ArrayList<Data> = ArrayList(cubeeNameArray.size)//////
+        val cubeeData =  Array(cubeeNameArray.size){Data()}
         for (i in cubeeData.indices) {
             cubeeData[i] = Data()
             cubeeData[i].name = cubeeNameArray[i]
