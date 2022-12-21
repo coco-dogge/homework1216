@@ -1,24 +1,26 @@
 package com.example.ch8
 
-import android.R
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+
 import androidx.appcompat.app.AppCompatActivity
+
 
 
 class MainActivity : AppCompatActivity() {
 
     class Data{
-        var photo:Int = 0
+        var photo:Int = 5
         var name:String = ""
     }
 
-    class MyAdapter : BaseAdapter() {
-        var data = arrayListOf<Data>()
-        var view:Int = 0
+     class MyAdapter(
+        var data: ArrayList<Data>,
+        var view:Int = 0) : BaseAdapter() {
 
         init {
             this.data = data
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, converView: View?, parent: ViewGroup?): View {
 
-            val converView = LayoutInflater.from(context).inflate(view,parent,false)
+            val converView = LayoutInflater.from(parent?.context).inflate(view,parent,false)
             val name : TextView = converView.findViewById(R.id.name)
             name.setText(data[position].name)
             val imageView: ImageView = converView.findViewById(R.id.imageView)
@@ -55,11 +57,12 @@ class MainActivity : AppCompatActivity() {
         val transNameArray = arrayListOf("腳踏車","機車","汽車","巴士")
         val transPhotoIdArray = arrayListOf(R.drawable.trans1,R.drawable.trans2,R.drawable.trans3,R.drawable.trans4)
 
-        val transData = arrayListOf<Data>(Data[transNameArray.size])
+        val transData : ArrayList<Data> = ArrayList(transNameArray.size)
+
         for (i in 0 until transData.size) {
             transData[i] = Data()
             transData[i].name = transNameArray[i]
-            transData[i].photo = transPhotoIdArray.get(i)
+            transData[i].photo = transPhotoIdArray[i]
         }
 
          val transAdapter = MyAdapter(transData, R.layout.trans_list)
@@ -70,8 +73,7 @@ class MainActivity : AppCompatActivity() {
         val messageArray = arrayListOf("訊息1", "訊息2", "訊息3", "訊息4", "訊息5", "訊息6")
         val messageAdapter = ArrayAdapter(
             this,
-            R.layout.simple_list_item_1, messageArray
-        )
+            android.R.layout.simple_list_item_1, messageArray)
         val listView: ListView = findViewById(R.id.listView)
         listView.setAdapter(messageAdapter)
 
@@ -84,11 +86,11 @@ class MainActivity : AppCompatActivity() {
             R.drawable.cubee3, R.drawable.cubee4, R.drawable.cubee5, R.drawable.cubee6,
             R.drawable.cubee7, R.drawable.cubee8, R.drawable.cubee9, R.drawable.cubee10
         )
-        val cubeeData = arrayOfNulls<Data>(cubeeNameArray.size)
+        val cubeeData : ArrayList<Data> = ArrayList(cubeeNameArray.size)//////
         for (i in cubeeData.indices) {
             cubeeData[i] = Data()
-            cubeeData[i]!!.name = cubeeNameArray[i]
-            cubeeData[i]!!.photo = cubeePhotoIdArray[i]
+            cubeeData[i].name = cubeeNameArray[i]
+            cubeeData[i].photo = cubeePhotoIdArray[i]
         }
         val cubeeAdapter = MyAdapter(cubeeData, R.layout.cubee_list)
 
